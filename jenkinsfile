@@ -6,14 +6,23 @@ properties([
     pipelineTriggers([githubPush()])])
 
 pipeline {
-    agent any
-    parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    }
+    agent any 
+
     stages {
-        stage('Example') {
+        stage('Build') { 
+            steps { 
+                sh 'pwd' 
+            }
+        }
+        stage('Test'){
             steps {
-                echo "Hello ${params.PERSON}"
+                sh 'java -version'
+                
+            }
+        }
+        stage('updownstream') {
+            steps {
+                build 'razOrganization/dir1/master'
             }
         }
     }
